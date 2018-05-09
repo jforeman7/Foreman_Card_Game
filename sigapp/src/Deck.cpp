@@ -115,7 +115,6 @@ Card Deck::drawCard()
 
 	// Draw the card from the top of the deck.
 	drawnCard = cards.front();
-	gsout << "Drawn card: " << drawnCard.getValue() << gsnl;
 
 	// Remove the card from the top of the deck.
 	cards.pop_front();
@@ -124,7 +123,7 @@ Card Deck::drawCard()
 	return drawnCard;
 }
 
-Card Deck::drawCard(Deck deck) 
+Card Deck::drawCard(Deck& deck) 
 { 
 	// Draw a card from the other deck.
 	Card drawnCard = deck.drawCard();
