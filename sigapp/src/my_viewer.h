@@ -19,9 +19,16 @@ Written by Jeff Foreman, 5 April 2018
 class MyViewer : public WsViewer
 {
 protected:
-	enum MenuEv { EvExit }; // Enumerations of UI events.
+	enum MenuEv {EvDraw, EvHold, EvExit }; // Enumerations of UI events.
+	enum Turn { Player, Dealer }; // Enumerations of the turns.
+	enum Choice { Draw, Hold }; // Enumerations of the choices.
 	UiCheckButton* _nbut; // UI drop down buttons.
 	float x, y, z; // Global coordinates.
+	Choice choice; // Keeps track of the previous choice.
+	Turn turn; // Keeps track of whos turn it is.
+	Deck *main; // Main Deck pointer.
+	Deck *player; // Player Deck pointer.
+	Deck *dealer; // Dealer Deck pointer.
 
 public:
 	// Constructor.
@@ -38,6 +45,9 @@ public:
 	void build_scene();
 	void build_Character();
 	void build_table();
+
+	// Dealer turn handler.
+	void handle_dealer_turn();
 
 	// Handle keyboard events.
 	virtual int handle_keyboard(const GsEvent &e) override;

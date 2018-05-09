@@ -25,6 +25,12 @@ MyViewer::MyViewer(int x, int y, int w, int h, const char* l) : WsViewer(x, y, w
 	_nbut = 0;
 	this->x = 0.0f, this->y = -60.0f, this->z = -160.0f;
 
+	main = new Deck(Deck::DeckType::Main);
+	player = new Deck(Deck::DeckType::Hand);
+	dealer = new Deck(Deck::DeckType::Hand);
+
+	turn = Turn::Player;
+
 	// Create scene and UI.
 	build_ui();
 	build_deck();
@@ -45,8 +51,14 @@ void MyViewer::build_ui()
 	// Add the panel to the left side of the screen.
 	p = uim->add_panel("", UiPanel::HorizLeft);
 
+	// Add Player Draw Card Button.
+	p->add(new UiButton("Draw Card", EvDraw));
+
+	// Add Player Hold Button.
+	p->add(new UiButton("Hold", EvHold)); p->top()->separate();
+
 	// Add exit button.
-	p->add(new UiButton("Exit", EvExit));
+	p->add(new UiButton("Exit", EvExit)); p->top()->separate();
 }
 
 // Adds model part to the scene.
@@ -78,8 +90,6 @@ void MyViewer::add_model(SnShape* s, GsVec p)
 // Add the deck of cards to the scene.
 void MyViewer::build_deck()
 {
-	Deck main(Deck::DeckType::Main);
-
 	SnModel* s;
 	double offset = 0.0;
 	GsVec p;
@@ -88,7 +98,7 @@ void MyViewer::build_deck()
 	{
 		p = GsVec(0.0, 160.0, offset);
 		s = new SnModel;
-		s->model()->load_obj(main.getCard(i).getCardFile());
+		s->model()->load_obj(main->getCard(i).getCardFile());
 		add_model(s, p);
 		offset += 0.2;
 	}
@@ -216,6 +226,30 @@ void MyViewer::build_Character()
 	add_model(s, GsVec(x, y,z));
 }
 
+void MyViewer::handle_dealer_turn()
+{
+	if (player->getTotal() == 21) { gsout << "PLAYER WINS" << gsnl; return; }
+
+	if (player->getTotal() > 21) { gsout << "DEALER WINS" << gsnl; return; }
+
+	if (dealer->getTotal() == 21) { gsout << "DEALER WINS" << gsnl; return; }
+
+	if (dealer->getTotal() > 21) { gsout << "PLAYER WINS" << gsnl; return; }
+
+	if (dealer->getTotal() > 17)
+	{
+		if (choice == Choice::Hold)
+		{
+			if (player->getTotal() > dealer->getTotal()) { gsout << "PLAYER WINS" << gsnl; return; }
+			gsout << "DEALER WINS" << gsnl; return;
+		}
+	}
+
+	dealer->drawCard(*main);
+	dealer->print();
+	turn = Turn::Player;
+}
+
 // Handle keyboard events.
 int MyViewer::handle_keyboard(const GsEvent &event)
 {
@@ -231,65 +265,9 @@ int MyViewer::handle_keyboard(const GsEvent &event)
 		//move camera
 	case GsEvent::KeySpace:
 	{
-
-		double lt, t0 = gs_time();
-		do
-		{
-
-			lt = gs_time() - t0;
-			if (lt < 3.0f)
-			{
-				//move Z 
-				camera().eye.z -= 0.005f;
-				camera().center.z -= 0.005f;
-				camera().up.z -= 0.005f;
-
-				//move Y
-				camera().eye.y += 0.01f;
-				camera().center.y += 0.01f;
-				camera().up.y += 0.01f;
-
-			}
-			else if (lt >3.0f && lt < 3.8f)
-			{
-				//move x
-				camera().eye.x -= 0.07f;
-				camera().center.x -= 0.03f;
-				camera().eye.z -= 0.07f;
-				//camera().eye.y -= 0.03f;
-
-
-			}
-			else if (lt >3.8f && lt < 6.3f)
-			{
-				camera().eye.z -= 0.02f;
-
-			}
-			else if (lt >6.3f && lt < 9)
-			{
-				camera().eye.x += 0.02f;
-				camera().center.x += 0.003f;
-
-			}
-			else if (lt > 9 && lt < 9.1f)
-			{
-				camera().center.x = 0.0f;
-			}
-			else if (lt > 9.1f && lt < 10.5f)
-			{
-				camera().eye.z += 0.009f;
-				camera().eye.y -= 0.008f;
-			}
-
-
-			render();
-			ws_check();
-			message().setf("local time = %f", lt);
-		} while (lt < 13);
-
-
 		return 1;
 	}
+
 	default: gsout << "Key pressed: " << event.key << gsnl;
 	}
 
@@ -302,7 +280,30 @@ int MyViewer::uievent(int event)
 	// Handle the appropriate UI event.
 	switch (event)
 	{
-	case EvExit: gs_exit();
+		case EvDraw: 
+		{
+			if (turn != Turn::Player) return 1;
+			choice = Choice::Draw;
+			player->drawCard(*main);
+			player->print();
+
+			turn = Turn::Dealer;
+			handle_dealer_turn();
+
+			return 1;
+		}
+		case EvHold:
+		{
+			if (turn != Turn::Player) return 1;
+			choice = Choice::Hold;
+			player->print();
+			turn = Turn::Dealer;
+			handle_dealer_turn();
+
+			return 1;
+		}
+
+		case EvExit: gs_exit();
 	}
 
 	return WsViewer::uievent(event);
