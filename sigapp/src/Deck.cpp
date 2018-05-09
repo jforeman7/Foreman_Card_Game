@@ -42,66 +42,122 @@ void Deck::generateDeck()
 	Card *temp;
 
 	// Add the Aces.
-	temp = new Card(Card::Ace, Card::CardSuits::Clubs, testCard);
+	temp = new Card(Card::Ace, Card::CardSuits::Clubs, "../Cards/Card_OBJs/Clubs/Ace_Clubs/Card_Template.obj");
 	Deck::cards.push_front(*temp);
-	temp = new Card(Card::Ace, Card::CardSuits::Diamonds, testCard);
+	temp = new Card(Card::Ace, Card::CardSuits::Diamonds, "../Cards/Card_OBJs/Diamonds/Ace_Diamonds/Card_Template.obj");
 	Deck::cards.push_front(*temp);
-	temp = new Card(Card::Ace, Card::CardSuits::Hearts, testCard);
+	temp = new Card(Card::Ace, Card::CardSuits::Hearts, "../Cards/Card_OBJs/Hearts/Ace_Hearts/Card_Template.obj");
 	Deck::cards.push_front(*temp);
-	temp = new Card(Card::Ace, Card::CardSuits::Spades, testCard);
+	temp = new Card(Card::Ace, Card::CardSuits::Spades, "../Cards/Card_OBJs/Spades/Ace_Spades/Card_Template.obj");
 	Deck::cards.push_front(*temp);
 
 	// Add the numeric cards.
-	for (int i = 2; i < 11; i++)
-	{
-		temp = new Card(i, Card::CardSuits::Clubs, testCard);
-		Deck::cards.push_front(*temp);
-	}
+	temp = new Card(2, Card::CardSuits::Clubs, "../Cards/Card_OBJs/Clubs/2_Clubs/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(3, Card::CardSuits::Clubs, "../Cards/Card_OBJs/Clubs/3_Clubs/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(4, Card::CardSuits::Clubs, "../Cards/Card_OBJs/Clubs/4_Clubs/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(5, Card::CardSuits::Clubs, "../Cards/Card_OBJs/Clubs/5_Clubs/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(6, Card::CardSuits::Clubs, "../Cards/Card_OBJs/Clubs/6_Clubs/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(7, Card::CardSuits::Clubs, "../Cards/Card_OBJs/Clubs/7_Clubs/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(8, Card::CardSuits::Clubs, "../Cards/Card_OBJs/Clubs/8_Clubs/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(9, Card::CardSuits::Clubs, "../Cards/Card_OBJs/Clubs/9_Clubs/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(10, Card::CardSuits::Clubs, "../Cards/Card_OBJs/Clubs/10_Clubs/Card_Template.obj");
+	Deck::cards.push_front(*temp);
 
-	for (int i = 2; i < 11; i++)
-	{
-		temp = new Card(i, Card::CardSuits::Diamonds, testCard);
-		Deck::cards.push_front(*temp);
-	}
+	
+	temp = new Card(2, Card::CardSuits::Diamonds, "../Cards/Card_OBJs/Diamonds/2_Diamonds/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(3, Card::CardSuits::Diamonds, "../Cards/Card_OBJs/Diamonds/3_Diamonds/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(4, Card::CardSuits::Diamonds, "../Cards/Card_OBJs/Diamonds/4_Diamonds/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(5, Card::CardSuits::Diamonds, "../Cards/Card_OBJs/Diamonds/5_Diamonds/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(6, Card::CardSuits::Diamonds, "../Cards/Card_OBJs/Diamonds/6_Diamonds/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(7, Card::CardSuits::Diamonds, "../Cards/Card_OBJs/Diamonds/7_Diamonds/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(8, Card::CardSuits::Diamonds, "../Cards/Card_OBJs/Diamonds/8_Diamonds/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(9, Card::CardSuits::Diamonds, "../Cards/Card_OBJs/Diamonds/9_Diamonds/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(10, Card::CardSuits::Diamonds, "../Cards/Card_OBJs/Diamonds/10_Diamonds/Card_Template.obj");
+	Deck::cards.push_front(*temp);
 
-	for (int i = 2; i < 11; i++)
-	{
-		temp = new Card(i, Card::CardSuits::Hearts, testCard);
-		Deck::cards.push_front(*temp);
-	}
+	
+	temp = new Card(2, Card::CardSuits::Hearts, "../Cards/Card_OBJs/Hearts/2_Hearts/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(3, Card::CardSuits::Hearts, "../Cards/Card_OBJs/Hearts/3_Hearts/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(4, Card::CardSuits::Hearts, "../Cards/Card_OBJs/Hearts/4_Hearts/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(5, Card::CardSuits::Hearts, "../Cards/Card_OBJs/Hearts/5_Hearts/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(6, Card::CardSuits::Hearts, "../Cards/Card_OBJs/Hearts/6_Hearts/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(7, Card::CardSuits::Hearts, "../Cards/Card_OBJs/Hearts/7_Hearts/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(8, Card::CardSuits::Hearts, "../Cards/Card_OBJs/Hearts/8_Hearts/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(9, Card::CardSuits::Hearts, "../Cards/Card_OBJs/Hearts/9_Hearts/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(10, Card::CardSuits::Hearts, "../Cards/Card_OBJs/Hearts/10_Hearts/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	
 
-	for (int i = 2; i < 11; i++)
-	{
-		temp = new Card(i, Card::CardSuits::Spades, testCard);
-		Deck::cards.push_front(*temp);
-	}
+	temp = new Card(2, Card::CardSuits::Spades, "../Cards/Card_OBJs/Spades/2_Spades/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(3, Card::CardSuits::Spades, "../Cards/Card_OBJs/Spades/3_Spades/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(4, Card::CardSuits::Spades, "../Cards/Card_OBJs/Spades/4_Spades/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(5, Card::CardSuits::Spades, "../Cards/Card_OBJs/Spades/5_Spades/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(6, Card::CardSuits::Spades, "../Cards/Card_OBJs/Spades/6_Spades/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(7, Card::CardSuits::Spades, "../Cards/Card_OBJs/Spades/7_Spades/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(8, Card::CardSuits::Spades, "../Cards/Card_OBJs/Spades/8_Spades/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(9, Card::CardSuits::Spades, "../Cards/Card_OBJs/Spades/9_Spades/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(10, Card::CardSuits::Spades, "../Cards/Card_OBJs/Spades/10_Spades/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	
 
 	// Add the face cards.
-	temp = new Card(Card::Jack, Card::CardSuits::Clubs, testCard);
+	temp = new Card(Card::Jack, Card::CardSuits::Clubs, "../Cards/Card_OBJs/Clubs/Jack_Clubs/Card_Template.obj");
 	Deck::cards.push_front(*temp);
-	temp = new Card(Card::Jack, Card::CardSuits::Diamonds, testCard);
+	temp = new Card(Card::Jack, Card::CardSuits::Diamonds, "../Cards/Card_OBJs/Diamonds/Jack_Diamonds/Card_Template.obj");
 	Deck::cards.push_front(*temp);
-	temp = new Card(Card::Jack, Card::CardSuits::Hearts, testCard);
+	temp = new Card(Card::Jack, Card::CardSuits::Hearts, "../Cards/Card_OBJs/Hearts/Jack_Hearts/Card_Template.obj");
 	Deck::cards.push_front(*temp);
-	temp = new Card(Card::Jack, Card::CardSuits::Spades, testCard);
-	Deck::cards.push_front(*temp);
-
-	temp = new Card(Card::Queen, Card::CardSuits::Clubs, testCard);
-	Deck::cards.push_front(*temp);
-	temp = new Card(Card::Queen, Card::CardSuits::Diamonds, testCard);
-	Deck::cards.push_front(*temp);
-	temp = new Card(Card::Queen, Card::CardSuits::Hearts, testCard);
-	Deck::cards.push_front(*temp);
-	temp = new Card(Card::Queen, Card::CardSuits::Spades, testCard);
+	temp = new Card(Card::Jack, Card::CardSuits::Spades, "../Cards/Card_OBJs/Spades/Jack_Spades/Card_Template.obj");
 	Deck::cards.push_front(*temp);
 
-	temp = new Card(Card::King, Card::CardSuits::Clubs, testCard);
+	temp = new Card(Card::Queen, Card::CardSuits::Clubs, "../Cards/Card_OBJs/Clubs/Queen_Clubs/Card_Template.obj");
 	Deck::cards.push_front(*temp);
-	temp = new Card(Card::King, Card::CardSuits::Diamonds, testCard);
+	temp = new Card(Card::Queen, Card::CardSuits::Diamonds, "../Cards/Card_OBJs/Diamonds/Queen_Diamonds/Card_Template.obj");
 	Deck::cards.push_front(*temp);
-	temp = new Card(Card::King, Card::CardSuits::Hearts, testCard);
+	temp = new Card(Card::Queen, Card::CardSuits::Hearts, "../Cards/Card_OBJs/Hearts/Queen_Hearts/Card_Template.obj");
 	Deck::cards.push_front(*temp);
-	temp = new Card(Card::King, Card::CardSuits::Spades, testCard);
+	temp = new Card(Card::Queen, Card::CardSuits::Spades, "../Cards/Card_OBJs/Spades/Queen_Spades/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+
+	temp = new Card(Card::King, Card::CardSuits::Clubs, "../Cards/Card_OBJs/Clubs/King_Clubs/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(Card::King, Card::CardSuits::Diamonds, "../Cards/Card_OBJs/Diamonds/King_Diamonds/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(Card::King, Card::CardSuits::Hearts, "../Cards/Card_OBJs/Hearts/King_Hearts/Card_Template.obj");
+	Deck::cards.push_front(*temp);
+	temp = new Card(Card::King, Card::CardSuits::Spades, "../Cards/Card_OBJs/Spades/King_Spades/Card_Template.obj");
 	Deck::cards.push_front(*temp);
 }
 

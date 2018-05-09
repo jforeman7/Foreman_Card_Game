@@ -12,8 +12,8 @@ newmtl Material__48
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka ../Cards/Card_Fronts/Clubs/7_Clubs.png
-	map_Kd ../Cards/Card_Fronts/Clubs/7_Clubs.png
+	map_Ka ../Cards/Card_Fronts/Spades/7_Spades.png
+	map_Kd ../Cards/Card_Fronts/Spades/7_Spades.png
 
 newmtl Material__49
 	Ns 10.0000
