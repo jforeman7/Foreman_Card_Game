@@ -1,4 +1,5 @@
-﻿  main.cpp
+﻿  Deck.cpp
+  main.cpp
   my_viewer.cpp
   Generating Code...
 libsig32mdd.lib(gs.obj) : warning LNK4099: PDB 'libsig32mdd.pdb' was not found with 'libsig32mdd.lib(gs.obj)' or at 'C:\Users\jforeman\Desktop\Foreman_Card_Game\sigapp\vs2017\obj\sigapp_Debug_Win32_v141\libsig32mdd.pdb'; linking object as if no debug info

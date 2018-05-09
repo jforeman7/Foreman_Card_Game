@@ -35,8 +35,8 @@ MyViewer::MyViewer(int x, int y, int w, int h, const char* l) : WsViewer(x, y, w
 	build_ui();
 	build_deck();
 	build_Character();
-	build_table();
-	build_scene();
+	//build_table();
+	//build_scene();
 }
 
 // Build the viewer UI.

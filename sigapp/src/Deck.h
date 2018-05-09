@@ -17,7 +17,7 @@ public: // Special declarations.
 	enum DeckType {Main, Hand, Discard};
 
 	// Test card file.
-	char* testCard = "../CardFiles/TestCard.obj";
+	char* testCard = "../Cards/Card_OBJs/Clubs/2_Clubs/Card_Template.obj";
 
 protected: // Class variables and helper functions.
 	
