@@ -24,6 +24,7 @@ MyViewer::MyViewer(int x, int y, int w, int h, const char* l) : WsViewer(x, y, w
 	// Initialize global variables.
 	_nbut = 0;
 	this->x = 0.0f, this->y = -60.0f, this->z = -160.0f;
+	manip = 0;
 
 	main = new Deck(Deck::DeckType::Main);
 	player = new Deck(Deck::DeckType::Hand);
@@ -34,9 +35,10 @@ MyViewer::MyViewer(int x, int y, int w, int h, const char* l) : WsViewer(x, y, w
 	// Create scene and UI.
 	build_ui();
 	build_deck();
-	//build_Character();
-	//build_table();
+	build_Character();
+	build_table();
 	//build_scene();
+	print_game_status();
 }
 
 // Build the viewer UI.
@@ -91,16 +93,17 @@ void MyViewer::add_model(SnShape* s, GsVec p)
 void MyViewer::build_deck()
 {
 	SnModel* s;
-	double offset = 0.0;
+	double offset = 143.0;
 	GsVec p;
 
 	for (int i = 0; i < 52; i++)
 	{
-		p = GsVec(0.0, 160.0, offset);
+		p = GsVec(0.0, offset, 0.0);
 		s = new SnModel;
 		s->model()->load_obj(main->getCard(i).getCardFile());
+		s->model()->rotate(GsQuat(0.0f, 0.0f, 0.75f, 0.75f));
 		add_model(s, p);
-		offset += 0.2;
+		offset += 0.4;
 	}
 }
 
@@ -179,6 +182,7 @@ void MyViewer::build_table()
 	b->model()->load_obj("../Table/table.obj");
 	b->model()->scale(5.0f);
 	add_model(b, GsVec(0.0f, 0.0f, 0.5f));
+	
 }
 
 // Create the the player
@@ -229,35 +233,37 @@ void MyViewer::build_Character()
 void MyViewer::handle_dealer_turn()
 {
 	// If the player gets 21, they win.
-	if (player->getTotal() == 21) { gsout << "PLAYER WINS" << gsnl; return; }
+	if (player->getTotal() == 21) { message().setf("PLAYER WINS"); turn = Over; return; }
 
 	// If the player goes over 21, they lose.
-	if (player->getTotal() > 21) { gsout << "DEALER WINS" << gsnl; return; }
+	if (player->getTotal() > 21) { message().setf("DEALER WINS"); turn = Over; return; }
 
 	// If the dealer gets 21, they win.
-	if (dealer->getTotal() == 21) { gsout << "DEALER WINS" << gsnl; return; }
+	if (dealer->getTotal() == 21) { message().setf("DEALER WINS"); turn = Over; return; }
 
 	// If the dealer goes over 21, they lose.
-	if (dealer->getTotal() > 21) { gsout << "PLAYER WINS" << gsnl; return; }
+	if (dealer->getTotal() > 21) { message().setf("PLAYER WINS"); turn = Over; return; }
 
 	// If the dealer has more than 17 points, they will play it safe and not draw.
-	if (dealer->getTotal() > 17)
+	if (dealer->getTotal() >= 16)
 	{
 		// If the player also chose to Hold, compare totals.
 		if (choice == Choice::Hold)
 		{
 			// If the player scored more than the dealer, they win.
-			if (player->getTotal() > dealer->getTotal()) { gsout << "PLAYER WINS" << gsnl; return; }
+			if (player->getTotal() > dealer->getTotal()) { message().setf("PLAYER WINS"); turn = Over; return; }
 
 			// Otherwise the dealer wins.
-			gsout << "DEALER WINS" << gsnl; return;
+			message().setf("PLAYER WINS"); turn = Over; return;
 		}
 		return;
 	}
 
 	// Dealer decides to draw a card.
 	dealer->drawCard(*main);
+	dealer_animation();
 	turn = Turn::Player;
+	print_game_status();
 }
 
 void MyViewer::player_animation()
@@ -272,7 +278,18 @@ void MyViewer::dealer_animation()
 
 void MyViewer::print_game_status()
 {
-
+	switch (turn)
+	{
+	case MyViewer::Player:
+		message().setf("Player Score: %d | Dealer Score: %d | Current Turn: Player", player->getTotal(), dealer->getTotal());
+		break;
+	case MyViewer::Dealer:
+		message().setf("Player Score: %d | Dealer Score: %d | Current Turn: Dealer", player->getTotal(), dealer->getTotal());
+		break;
+	default:
+		message().setf("New case who dis");
+		break;
+	}
 }
 
 // Handle keyboard events.
@@ -310,7 +327,9 @@ int MyViewer::uievent(int event)
 			if (turn != Turn::Player) return 1;
 			choice = Choice::Draw;
 			player->drawCard(*main);
+			player_animation();
 			turn = Turn::Dealer;
+			print_game_status();
 			handle_dealer_turn();
 
 			return 1;
@@ -320,6 +339,7 @@ int MyViewer::uievent(int event)
 			if (turn != Turn::Player) return 1;
 			choice = Choice::Hold;
 			turn = Turn::Dealer;
+			print_game_status();
 			handle_dealer_turn();
 
 			return 1;

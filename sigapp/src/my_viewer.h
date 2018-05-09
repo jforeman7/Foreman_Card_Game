@@ -20,8 +20,8 @@ class MyViewer : public WsViewer
 {
 protected:
 	enum MenuEv {EvDraw, EvHold, EvExit }; // Enumerations of UI events.
-	enum Turn { Player, Dealer }; // Enumerations of the turns.
-	enum Choice { Draw, Hold }; // Enumerations of the choices.
+	enum Turn { Player, Dealer, Over }; // Enumerations of the turns.
+	enum Choice { Draw, Hold, }; // Enumerations of the choices.
 	UiCheckButton* _nbut; // UI drop down buttons.
 	float x, y, z; // Global coordinates.
 	Choice choice; // Keeps track of the previous choice.
@@ -29,6 +29,7 @@ protected:
 	Deck *main; // Main Deck pointer.
 	Deck *player; // Player Deck pointer.
 	Deck *dealer; // Dealer Deck pointer.
+	int manip; // Manipulator index tracker.
 
 public:
 	// Constructor.
