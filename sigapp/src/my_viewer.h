@@ -31,9 +31,13 @@ public:
 	void add_model(SnShape* s, GsVec p);
 
 	// Build the models to be added to the scene.
+	void build_deck();
 	void build_scene();
 	void build_Character();
 	void build_table();
+
+	// Test game.
+	void game();
 
 	// Handle keyboard events.
 	virtual int handle_keyboard(const GsEvent &e) override;

@@ -107,7 +107,6 @@ void Deck::generateDeck()
 
 Card Deck::drawCard()
 {
-
 	// Temporary storage for drawn card.
 	Card drawnCard;
 
@@ -116,6 +115,7 @@ Card Deck::drawCard()
 
 	// Draw the card from the top of the deck.
 	drawnCard = cards.front();
+	gsout << "Drawn card: " << drawnCard.getValue() << gsnl;
 
 	// Remove the card from the top of the deck.
 	cards.pop_front();
@@ -154,4 +154,40 @@ void Deck::shuffle()
 		// Swap the current index with the random one.
 		std::swap(cards[i], cards[r]);
 	}
+}
+
+Card Deck::getCard(int i) { return cards[i]; }
+
+int Deck::getTotal()
+{
+	// If the deque is empty, there are no cards in the hand. Return 0.
+	if (cards.empty()) return 0;
+
+	// A counter for aces in the hand.
+	int aces = 0;
+
+	// Total value in the hand variable.
+	int total = 0;
+
+	for (size_t i = 0; i < cards.size(); i++)
+	{
+		// Check for the occurence of the special card "ace". Keep count of aces.
+		if (cards[i].getValue() == 11) aces++;
+
+		// Add the card value to the total.
+		total += cards[i].getValue();
+
+		// Special rules for an Ace, which can be either be value 11 or 1. 
+		// Default value is 11, if this sets the hand over 21, switch value to 1.
+		// Show that the ace has been handled by decrementing the counter.
+		if (total > 21 && aces > 0) { total -= 10; aces--; }
+	}
+
+	return total;
+}
+
+void Deck::print()
+{
+	for (size_t i = 0; i < cards.size(); i++)
+		gsout << "Card [" << i << "] has value: " << cards[i].getValue() << gsnl;
 }

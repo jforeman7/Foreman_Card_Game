@@ -19,14 +19,14 @@ public: // Special declarations.
 	// Enumerate the card suits.
 	enum CardSuits { Clubs, Diamonds, Hearts, Spades, Blank };
 
-	// Declare the special values of the face cards and the ace.
-	const static int Ace = 1, Jack = 11, Queen = 12, King = 13; 
+	// Declare the special values of the face cards and the ace for Blackjack.
+	const static int Ace = 11, Jack = 10, Queen = 10, King = 10; 
 
 protected: // Class variables.
 
 	int value; // Value of the card.
 	CardSuits suit; // Suit of the card.
-	GsString cardFile; // Name of the 3ds file for the card.
+	char* cardFile; // Name of the 3ds file for the card.
 
 public: // Class functions.
 
@@ -34,11 +34,11 @@ public: // Class functions.
 	Card();
 
 	// Constructor. Takes in the card value, suit, and color.
-	Card(int value, CardSuits suit, GsString cardFile);
+	Card(int value, CardSuits suit, char* cardFile);
 
 	// Getters.
 	int getValue(); // Returns card value.
 	CardSuits getSuit(); // Returns card suit.
-	GsString getCardFile(); // Returns 3ds file name for the card.
+	char* getCardFile(); // Returns 3ds file name for the card.
 
 };

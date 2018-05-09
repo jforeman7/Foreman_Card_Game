@@ -17,7 +17,7 @@ public: // Special declarations.
 	enum DeckType {Main, Hand, Discard};
 
 	// Test card file.
-	GsString testCard = "../CardFiles/TestCard.obj";
+	char* testCard = "../CardFiles/TestCard.obj";
 
 protected: // Class variables and helper functions.
 	
@@ -40,4 +40,12 @@ public: // Class functions.
 
 	// Shuffles this deck of cards.
 	void shuffle(); 
+
+	// Getter function for the deque of cards.
+	Card getCard(int i);
+
+	// Counts the values of the cards in the hand and returns the total.
+	int getTotal();
+
+	void print();
 };

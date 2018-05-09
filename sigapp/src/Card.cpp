@@ -10,10 +10,10 @@
 
 Card::Card() { this->value = 0; this->suit = Blank; this->cardFile = ""; }
 
-Card::Card(int value, Card::CardSuits suit, GsString cardFile){ this->value = value; this->suit = suit; this->cardFile = cardFile; }
+Card::Card(int value, Card::CardSuits suit, char* cardFile){ this->value = value; this->suit = suit; this->cardFile = cardFile; }
 
 int Card::getValue() { return this->value; }
 
 Card::CardSuits Card::getSuit() { return this->suit; }
 
-GsString Card::getCardFile() { return this->cardFile; }
+char* Card::getCardFile() { return this->cardFile; }
