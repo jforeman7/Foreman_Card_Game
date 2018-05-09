@@ -14,11 +14,14 @@ Written by Jeff Foreman, 5 April 2018
 # include <sigogl/ui_button.h>
 # include <sigogl/ws_viewer.h>
 
+#include "Deck.h"
+
 class MyViewer : public WsViewer
 {
 protected:
 	enum MenuEv { EvExit }; // Enumerations of UI events.
 	UiCheckButton* _nbut; // UI drop down buttons.
+	float x, y, z; // Global coordinates.
 
 public:
 	// Constructor.
@@ -35,9 +38,6 @@ public:
 	void build_scene();
 	void build_Character();
 	void build_table();
-
-	// Test game.
-	void game();
 
 	// Handle keyboard events.
 	virtual int handle_keyboard(const GsEvent &e) override;

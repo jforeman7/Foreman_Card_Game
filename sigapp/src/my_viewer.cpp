@@ -23,14 +23,14 @@ MyViewer::MyViewer(int x, int y, int w, int h, const char* l) : WsViewer(x, y, w
 {
 	// Initialize global variables.
 	_nbut = 0;
+	this->x = 0.0f, this->y = -60.0f, this->z = -160.0f;
 
 	// Create scene and UI.
 	build_ui();
-	//build_deck();
+	build_deck();
 	build_Character();
 	build_table();
 	build_scene();
-	game();
 }
 
 // Build the viewer UI.
@@ -171,9 +171,6 @@ void MyViewer::build_table()
 	add_model(b, GsVec(0.0f, 0.0f, 0.5f));
 }
 
-float x = 0.0f;
-float y = -60.0f;
-float z = -160.0f;
 // Create the the player
 void MyViewer::build_Character()
 {
@@ -217,30 +214,6 @@ void MyViewer::build_Character()
 	s->model()->load_obj("../Character/rightupperarm.obj");
 	s->model()->scale(140.0f);
 	add_model(s, GsVec(x, y,z));
-}
-
-void MyViewer::game()
-{
-	Deck main(Deck::DeckType::Main);
-	Deck player(Deck::DeckType::Hand);
-	Deck dealer(Deck::DeckType::Hand);
-
-	main.print();
-	Card c = player.drawCard(main);
-	gsout << "Player drew card with value: " << c.getValue() << gsnl;
-	c = dealer.drawCard(main);
-	gsout << "Dealer drew card with value: " << c.getValue() << gsnl;
-	c = player.drawCard(main);
-	gsout << "Player drew card with value: " << c.getValue() << gsnl;
-	c = dealer.drawCard(main);
-	gsout << "Dealer drew card with value: " << c.getValue() << gsnl;
-
-	main.print();
-	player.print();
-	dealer.print();
-
-	gsout << "Player total: " << player.getTotal() << gsnl;
-	gsout << "Dealer total: " << dealer.getTotal() << gsnl;
 }
 
 // Handle keyboard events.
