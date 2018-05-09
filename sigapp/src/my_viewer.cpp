@@ -17,7 +17,7 @@ Written by Jeff Foreman, 5 April 2018
 # include <sig/sn_manipulator.h>
 
 # include <sigogl/ws_run.h>
-
+double iterator = -40;
 // Viewer constructor.
 MyViewer::MyViewer(int x, int y, int w, int h, const char* l) : WsViewer(x, y, w, h, l)
 {
@@ -37,7 +37,7 @@ MyViewer::MyViewer(int x, int y, int w, int h, const char* l) : WsViewer(x, y, w
 	build_deck();
 	build_Character();
 	build_table();
-	//build_scene();
+	build_scene();
 	print_game_status();
 }
 
@@ -256,7 +256,7 @@ void MyViewer::handle_dealer_turn()
 			// Otherwise the dealer wins.
 			message().setf("DEALER WINS"); turn = Over; return;
 		}
-
+		turn = Turn::Player;
 		return;
 	}
 
@@ -282,14 +282,27 @@ void MyViewer::player_animation()
 	// Get the matrix of the drawn card.
 	GsMat cardMatrix = cardManip->mat();
 
-	// Transformaton matrix for modification.
+	// Translation matrix for modification.
 	GsMat t;
+	
+	// ========== Translation Begin ==========
+	GsVec trans = GsVec(iterator, -15.0, 100.0);
+	iterator += 30;
+	t.translation(trans);
 
-	// ========== Animation begin ==========
+	cardMatrix.mult(cardMatrix, t);
+	cardManip->initial_mat(cardMatrix);
+	render();
+	// ========== Translation End ==========
 
+	// Rotation matrix for modification.
+	GsMat r;
 
-
-	// ========== Animation end ==========
+	// ========== Rotation Begin ==========
+	r.rotx(-3.14f / 2.0f);
+	cardMatrix.mult(cardMatrix, r);
+	cardManip->initial_mat(cardMatrix);
+	render();
 	
 	// Decrement the manipulator index.
 	manip_index--;
@@ -297,7 +310,6 @@ void MyViewer::player_animation()
 
 void MyViewer::dealer_animation()
 {
-	// Get the manipulator of the drawn card.
 	SnManipulator* cardManip = rootg()->get<SnManipulator>(manip_index);
 
 	// Get the matrix of the drawn card.
@@ -306,11 +318,25 @@ void MyViewer::dealer_animation()
 	// Transformaton matrix for modification.
 	GsMat t;
 
-	// ========== Animation begin ==========
+	// ========== Translation begin ==========
+	GsVec trans = GsVec(-iterator, -15.0, -100.0);
+	//iterator += 25;
+	t.translation(trans);
 
+	cardMatrix.mult(cardMatrix, t);
+	cardManip->initial_mat(cardMatrix);
+	render();
+	// ========== Translation end ==========
 
+	// Rotation matrix for modification.
+	GsMat r;
 
-	// ========== Animation end ==========
+	// ========== Rotation Begin ==========
+	r.rotx(3.14f );
+	cardMatrix.mult(cardMatrix, r);
+	cardManip->initial_mat(cardMatrix);
+	render();
+	// ========== Rotation End ==========
 
 	// Decrement the manipulator index.
 	manip_index--;
