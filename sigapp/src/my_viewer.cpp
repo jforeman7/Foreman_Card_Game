@@ -24,7 +24,7 @@ MyViewer::MyViewer(int x, int y, int w, int h, const char* l) : WsViewer(x, y, w
 	// Initialize global variables.
 	_nbut = 0;
 	this->x = 0.0f, this->y = -60.0f, this->z = -160.0f;
-	manip = 0;
+	manip_index = 51;
 
 	main = new Deck(Deck::DeckType::Main);
 	player = new Deck(Deck::DeckType::Hand);
@@ -244,7 +244,7 @@ void MyViewer::handle_dealer_turn()
 	// If the dealer goes over 21, they lose.
 	if (dealer->getTotal() > 21) { message().setf("PLAYER WINS"); turn = Over; return; }
 
-	// If the dealer has more than 17 points, they will play it safe and not draw.
+	// If the dealer has more than 16 points, they will play it safe and not draw.
 	if (dealer->getTotal() >= 16)
 	{
 		// If the player also chose to Hold, compare totals.
@@ -254,8 +254,9 @@ void MyViewer::handle_dealer_turn()
 			if (player->getTotal() > dealer->getTotal()) { message().setf("PLAYER WINS"); turn = Over; return; }
 
 			// Otherwise the dealer wins.
-			message().setf("PLAYER WINS"); turn = Over; return;
+			message().setf("DEALER WINS"); turn = Over; return;
 		}
+
 		return;
 	}
 
@@ -263,17 +264,56 @@ void MyViewer::handle_dealer_turn()
 	dealer->drawCard(*main);
 	dealer_animation();
 	turn = Turn::Player;
+
+	// If the dealer gets 21, they win.
+	if (dealer->getTotal() == 21) { message().setf("DEALER WINS"); turn = Over; return; }
+
+	// If the dealer goes over 21, they lose.
+	if (dealer->getTotal() > 21) { message().setf("PLAYER WINS"); turn = Over; return; }
+
 	print_game_status();
 }
 
 void MyViewer::player_animation()
 {
+	// Get the manipulator of the drawn card.
+	SnManipulator* cardManip = rootg()->get<SnManipulator>(manip_index);
+	
+	// Get the matrix of the drawn card.
+	GsMat cardMatrix = cardManip->mat();
 
+	// Transformaton matrix for modification.
+	GsMat t;
+
+	// ========== Animation begin ==========
+
+
+
+	// ========== Animation end ==========
+	
+	// Decrement the manipulator index.
+	manip_index--;
 }
 
 void MyViewer::dealer_animation()
 {
+	// Get the manipulator of the drawn card.
+	SnManipulator* cardManip = rootg()->get<SnManipulator>(manip_index);
 
+	// Get the matrix of the drawn card.
+	GsMat cardMatrix = cardManip->mat();
+
+	// Transformaton matrix for modification.
+	GsMat t;
+
+	// ========== Animation begin ==========
+
+
+
+	// ========== Animation end ==========
+
+	// Decrement the manipulator index.
+	manip_index--;
 }
 
 void MyViewer::print_game_status()
@@ -292,6 +332,20 @@ void MyViewer::print_game_status()
 	}
 }
 
+void MyViewer::set_camera()
+{
+	camera().eye.x = -7.522f;
+	camera().eye.y = 271.622f;
+	camera().eye.z = 359.901f;
+
+	camera().center.x = -6.2714f;
+	camera().center.y = 196.16f;
+	camera().center.z = -23.3413f;
+
+	camera().fovy = 0.6803333f;
+	render();
+}
+
 // Handle keyboard events.
 int MyViewer::handle_keyboard(const GsEvent &event)
 {
@@ -307,6 +361,7 @@ int MyViewer::handle_keyboard(const GsEvent &event)
 		//move camera
 	case GsEvent::KeySpace:
 	{
+		set_camera();
 		return 1;
 	}
 

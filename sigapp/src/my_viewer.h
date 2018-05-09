@@ -29,7 +29,7 @@ protected:
 	Deck *main; // Main Deck pointer.
 	Deck *player; // Player Deck pointer.
 	Deck *dealer; // Dealer Deck pointer.
-	int manip; // Manipulator index tracker.
+	int manip_index; // Manipulator index tracker.
 
 public:
 	// Constructor.
@@ -56,6 +56,9 @@ public:
 
 	// Game status printers.
 	void print_game_status();
+
+	// Set the camera.
+	void set_camera();
 
 	// Handle keyboard events.
 	virtual int handle_keyboard(const GsEvent &e) override;
