@@ -228,26 +228,51 @@ void MyViewer::build_Character()
 
 void MyViewer::handle_dealer_turn()
 {
+	// If the player gets 21, they win.
 	if (player->getTotal() == 21) { gsout << "PLAYER WINS" << gsnl; return; }
 
+	// If the player goes over 21, they lose.
 	if (player->getTotal() > 21) { gsout << "DEALER WINS" << gsnl; return; }
 
+	// If the dealer gets 21, they win.
 	if (dealer->getTotal() == 21) { gsout << "DEALER WINS" << gsnl; return; }
 
+	// If the dealer goes over 21, they lose.
 	if (dealer->getTotal() > 21) { gsout << "PLAYER WINS" << gsnl; return; }
 
+	// If the dealer has more than 17 points, they will play it safe and not draw.
 	if (dealer->getTotal() > 17)
 	{
+		// If the player also chose to Hold, compare totals.
 		if (choice == Choice::Hold)
 		{
+			// If the player scored more than the dealer, they win.
 			if (player->getTotal() > dealer->getTotal()) { gsout << "PLAYER WINS" << gsnl; return; }
+
+			// Otherwise the dealer wins.
 			gsout << "DEALER WINS" << gsnl; return;
 		}
+		return;
 	}
 
+	// Dealer decides to draw a card.
 	dealer->drawCard(*main);
-	dealer->print();
 	turn = Turn::Player;
+}
+
+void MyViewer::player_animation()
+{
+
+}
+
+void MyViewer::dealer_animation()
+{
+
+}
+
+void MyViewer::print_game_status()
+{
+
 }
 
 // Handle keyboard events.
@@ -285,8 +310,6 @@ int MyViewer::uievent(int event)
 			if (turn != Turn::Player) return 1;
 			choice = Choice::Draw;
 			player->drawCard(*main);
-			player->print();
-
 			turn = Turn::Dealer;
 			handle_dealer_turn();
 
@@ -296,7 +319,6 @@ int MyViewer::uievent(int event)
 		{
 			if (turn != Turn::Player) return 1;
 			choice = Choice::Hold;
-			player->print();
 			turn = Turn::Dealer;
 			handle_dealer_turn();
 

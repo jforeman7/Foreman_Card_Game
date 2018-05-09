@@ -49,6 +49,13 @@ public:
 	// Dealer turn handler.
 	void handle_dealer_turn();
 
+	// Card animations.
+	void player_animation();
+	void dealer_animation();
+
+	// Game status printers.
+	void print_game_status();
+
 	// Handle keyboard events.
 	virtual int handle_keyboard(const GsEvent &e) override;
 
