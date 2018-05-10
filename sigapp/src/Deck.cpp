@@ -241,6 +241,8 @@ int Deck::getTotal()
 	return total;
 }
 
+int Deck::getSize() { return cards.size(); }
+
 void Deck::print()
 {
 	for (size_t i = 0; i < cards.size(); i++)

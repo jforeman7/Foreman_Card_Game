@@ -30,6 +30,7 @@ protected:
 	Deck *player; // Player Deck pointer.
 	Deck *dealer; // Dealer Deck pointer.
 	int manip_index; // Manipulator index tracker.
+	double iterator;
 
 public:
 	// Constructor.

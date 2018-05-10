@@ -17,7 +17,7 @@ Written by Jeff Foreman, 5 April 2018
 # include <sig/sn_manipulator.h>
 
 # include <sigogl/ws_run.h>
-double iterator = -40;
+
 // Viewer constructor.
 MyViewer::MyViewer(int x, int y, int w, int h, const char* l) : WsViewer(x, y, w, h, l)
 {
@@ -25,6 +25,7 @@ MyViewer::MyViewer(int x, int y, int w, int h, const char* l) : WsViewer(x, y, w
 	_nbut = 0;
 	this->x = 0.0f, this->y = -60.0f, this->z = -160.0f;
 	manip_index = 51;
+	iterator = -40;
 
 	main = new Deck(Deck::DeckType::Main);
 	player = new Deck(Deck::DeckType::Hand);
@@ -96,7 +97,7 @@ void MyViewer::build_deck()
 	double offset = 143.0;
 	GsVec p;
 
-	for (int i = 0; i < 52; i++)
+	for (int i = 51; i >= 0; i--)
 	{
 		p = GsVec(0.0, offset, 0.0);
 		s = new SnModel;
@@ -232,6 +233,9 @@ void MyViewer::build_Character()
 
 void MyViewer::handle_dealer_turn()
 {
+	// If the player has 5 cards in hand, they win.
+	if (player->getSize() == 5) { message().setf("PLAYER WINS"); turn = Over; return; }
+
 	// If the player gets 21, they win.
 	if (player->getTotal() == 21) { message().setf("PLAYER WINS"); turn = Over; return; }
 
@@ -278,31 +282,60 @@ void MyViewer::player_animation()
 {
 	// Get the manipulator of the drawn card.
 	SnManipulator* cardManip = rootg()->get<SnManipulator>(manip_index);
-	
+
 	// Get the matrix of the drawn card.
 	GsMat cardMatrix = cardManip->mat();
 
 	// Translation matrix for modification.
 	GsMat t;
-	
-	// ========== Translation Begin ==========
-	GsVec trans = GsVec(iterator, -15.0, 100.0);
-	iterator += 30;
-	t.translation(trans);
 
-	cardMatrix.mult(cardMatrix, t);
-	cardManip->initial_mat(cardMatrix);
-	render();
+	// ========== Translation Begin ==========
+	double x_end = iterator;
+	double y_end = 1.0;
+	double z_end = 100.0;
+	double dt = 60.0;
+
+	double xi = x_end / dt;
+	double yi = y_end / dt;
+	double zi = z_end / dt;
+	
+	double i = 0.0;
+	while (i < dt)
+	{
+		GsVec trans = GsVec(xi, yi, zi);
+		t.translation(trans);
+		cardMatrix.mult(cardMatrix, t);
+		cardManip->initial_mat(cardMatrix);
+		render();
+		ws_check();
+		gs_sleep(5);
+		i += 1.0;
+	}
+
+	//move the next card to the side
+	iterator += 30;
+
 	// ========== Translation End ==========
 
 	// Rotation matrix for modification.
 	GsMat r;
 
 	// ========== Rotation Begin ==========
-	r.rotx(-3.14f / 2.0f);
-	cardMatrix.mult(cardMatrix, r);
-	cardManip->initial_mat(cardMatrix);
-	render();
+	double r_end = -gspidiv2;
+	double ri = r_end / dt;
+
+	i = 0.0;
+
+	while (i < dt)
+	{
+		r.rotx(float(ri));
+		cardMatrix.mult(cardMatrix, r);
+		cardManip->initial_mat(cardMatrix);
+		render();
+		ws_check();
+		gs_sleep(5);
+		i += 1.0;
+	}
 	
 	// Decrement the manipulator index.
 	manip_index--;
@@ -319,23 +352,49 @@ void MyViewer::dealer_animation()
 	GsMat t;
 
 	// ========== Translation begin ==========
-	GsVec trans = GsVec(-iterator, -15.0, -100.0);
-	//iterator += 25;
-	t.translation(trans);
+	double x_end = -iterator;
+	double y_end = -15.0;
+	double z_end = -100.0;
+	double dt = 60.0;
 
-	cardMatrix.mult(cardMatrix, t);
-	cardManip->initial_mat(cardMatrix);
-	render();
+	double xi = x_end / dt;
+	double yi = y_end / dt;
+	double zi = z_end / dt;
+
+	double i = 0.0;
+	while (i < dt)
+	{
+		GsVec trans = GsVec(xi, yi, zi);
+		t.translation(trans);
+		cardMatrix.mult(cardMatrix, t);
+		cardManip->initial_mat(cardMatrix);
+		render();
+		ws_check();
+		gs_sleep(5);
+		i += 1.0;
+	}
+
 	// ========== Translation end ==========
 
 	// Rotation matrix for modification.
 	GsMat r;
 
 	// ========== Rotation Begin ==========
-	r.rotx(3.14f );
-	cardMatrix.mult(cardMatrix, r);
-	cardManip->initial_mat(cardMatrix);
-	render();
+	double r_end = gspi;
+	double ri = r_end / dt;
+
+	i = 0.0;
+
+	while (i < dt)
+	{
+		r.rotx(float(ri));
+		cardMatrix.mult(cardMatrix, r);
+		cardManip->initial_mat(cardMatrix);
+		render();
+		ws_check();
+		gs_sleep(5);
+		i += 1.0;
+	}
 	// ========== Rotation End ==========
 
 	// Decrement the manipulator index.

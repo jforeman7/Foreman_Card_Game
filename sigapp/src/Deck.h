@@ -47,6 +47,9 @@ public: // Class functions.
 	// Counts the values of the cards in the hand and returns the total.
 	int getTotal();
 
+	// Returns how many cards are in the deck.
+	int getSize();
+
 	// Print out the deck of cards.
 	void print();
 };
